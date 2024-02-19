@@ -1,5 +1,6 @@
 from tkinter import *
 from quiz_brain import QuizBrain
+import time
 
 THEME_COLOR = "#375362"
 
@@ -43,9 +44,31 @@ class QuizInterface:
         self.window.mainloop()
 
     def true_pressed(self):
-        self.qb.check_answer("true")
-        self.canvas.itemconfig(self.question_text, text=self.qb.next_question())
+        self.score = self.qb.check_answer("true")
+        self.score_label.destroy()
+        self.score_label = Label(text=f"Score: {self.score}", bg=THEME_COLOR, fg="#ffffff")
+        self.score_label.grid(column=2, row=1)
+
+        if self.qb.still_has_questions():
+            self.canvas.itemconfig(self.question_text, text=self.qb.next_question())
+        else:
+            self.score_label.destroy()
+            self.score_label = Label(text=f"Score: {self.score}", bg=THEME_COLOR, fg="#ffffff")
+            self.score_label.grid(column=2, row=1)
+            time.sleep(3)
+            self.window.destroy()
 
     def false_pressed(self):
-        self.qb.check_answer("false")
-        self.canvas.itemconfig(self.question_text, text=self.qb.next_question())
+        self.score = self.qb.check_answer("false")
+        self.score_label.destroy()
+        self.score_label = Label(text=f"Score: {self.score}", bg=THEME_COLOR, fg="#ffffff")
+        self.score_label.grid(column=2, row=1)
+
+        if self.qb.still_has_questions():
+            self.canvas.itemconfig(self.question_text, text=self.qb.next_question())
+        else:
+            self.score_label.destroy()
+            self.score_label = Label(text=f"Score: {self.score}", bg=THEME_COLOR, fg="#ffffff")
+            self.score_label.grid(column=2, row=1)
+            time.sleep(3)
+            self.window.destroy()
